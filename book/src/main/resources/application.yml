@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: book
+
+server:
+  port: 8081
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:              # command key. use default for global setting.
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+      circuitBreaker:
+        requestVolumeThreshold: 20
+        errorThresholdPercentage: 50
+
+history:
+  ribbon:
+    #listOfServers: localhost:7777, localhost:8500
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 2
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+app:
+  api:
+    kakao:
+      domain: https://dapi.kakao.com
+      path: /v3/search/book
+      appKey: KakaoAK 2f5f548237c61a89a53f04539f8200cb
+    naver:
+      domain: https://openapi.naver.com
+      path: /v1/search/book.json
+      clientId: nIrE02ahRaMnxyWqivlG
+      clientSecret: h7kZcmtQ19
