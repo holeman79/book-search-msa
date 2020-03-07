@@ -22,6 +22,7 @@ public class BookSearchResponse {
     private Integer currentPage;
     private Boolean first;
     private Boolean last;
+    private String apiName;
 
     private List<Book> books;
 
@@ -36,6 +37,7 @@ public class BookSearchResponse {
                     response.setCurrentPage(bookSearchRequest.getPage());
                     response.setFirst(bookSearchRequest.getPage() == 1);
                     response.setLast(meta.getIsEnd());
+                    response.setApiName("KAKAO");
 
                     response.books = kakaoBooks.getDocuments()
                             .stream()
@@ -69,6 +71,7 @@ public class BookSearchResponse {
                     response.setCurrentPage(bookSearchRequest.getPage());
                     response.setFirst(bookSearchRequest.getPage() == 1);
                     response.setLast(bookSearchRequest.getPage() == totalPage);
+                    response.setApiName("NAVER");
 
                     response.books = naverBooks.getItems()
                             .stream()

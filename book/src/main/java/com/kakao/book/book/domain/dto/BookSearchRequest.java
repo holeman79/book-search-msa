@@ -27,7 +27,7 @@ public class BookSearchRequest {
     @Max(50)
     private Integer size = 10;
 
-    private String target = "title";
+    private String target;
 
     @Getter
     @AllArgsConstructor
@@ -87,12 +87,7 @@ public class BookSearchRequest {
     public String getNaverUri(String uri) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri);
 
-        if (!StringUtils.hasText(this.target)) {
-            builder.queryParam("query", this.query);
-        } else {
-            builder.queryParam(TargetType.findByString(this.target).toString(), this.query);
-        }
-
+        builder.queryParam("query", this.query);
         if (StringUtils.hasText(this.sort)) {
             builder.queryParam("sort", SortType.findByString(this.sort).toString());
         }

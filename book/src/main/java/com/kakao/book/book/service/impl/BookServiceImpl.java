@@ -7,7 +7,9 @@ import com.kakao.book.book.domain.dto.BookSearchResponse;
 import com.kakao.book.book.domain.kakao.KakaoBooks;
 import com.kakao.book.book.domain.naver.NaverBooks;
 import com.kakao.book.book.service.BookService;
+import com.kakao.book.book.service.remote.KakaoBookRemoteService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,32 +21,10 @@ import reactor.core.scheduler.Schedulers;
 @RequiredArgsConstructor
 @Slf4j
 public class BookServiceImpl implements BookService {
-    private final KakaoProperty kakaoProperty;
+    private final KakaoBookRemoteService kakaoBookRemoteService;
 
-    private final NaverProperty naverProperty;
-
-    private final WebClient client;
-
-    @HystrixCommand(commandKey = "booksByKakaoApi", fallbackMethod = "getBooksByNaverApi")
-    public Mono<BookSearchResponse> getBooksByKakaoApi(BookSearchRequest bookSearchRequest){
-        Mono<KakaoBooks> kakaoBooksMono = client.get()
-                .uri(bookSearchRequest.getKakaoUri(kakaoProperty.getDomain() + kakaoProperty.getPath()))
-                .header("Authorization", kakaoProperty.getAppKey())
-                .retrieve()
-                .bodyToMono(KakaoBooks.class)
-                .subscribeOn(Schedulers.elastic());
-        return BookSearchResponse.kakaoBookResponseMapper(kakaoBooksMono, bookSearchRequest);
-    }
-
-    public Mono<BookSearchResponse> getBooksByNaverApi(BookSearchRequest bookSearchRequest, Throwable t){
-        log.info(String.format("kakao api call error : %s"), t.getMessage());
-        Mono<NaverBooks> naverBooksMono = client.get()
-                .uri(bookSearchRequest.getNaverUri(naverProperty.getDomain() + naverProperty.getPath()))
-                .header("X-Naver-Client-Id", naverProperty.getClientId())
-                .header("X-Naver-Client-Secret", naverProperty.getClientSecret())
-                .retrieve()
-                .bodyToMono(NaverBooks.class)
-                .subscribeOn(Schedulers.elastic());
-        return BookSearchResponse.naverBookResponseMapper(naverBooksMono, bookSearchRequest);
+    @Override
+    public Mono<BookSearchResponse> getBooksByExternalApi(BookSearchRequest bookSearchRequest) {
+        return kakaoBookRemoteService.getBooksByKakaoApi(bookSearchRequest);
     }
 }

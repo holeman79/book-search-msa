@@ -23,7 +23,7 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<Mono<BookSearchResponse>> getBooks(@Valid BookSearchRequest bookSearchRequest) {
-        Mono<BookSearchResponse> bookSearchResponse = bookService.getBooksByKakaoApi(bookSearchRequest);
+        Mono<BookSearchResponse> bookSearchResponse = bookService.getBooksByExternalApi(bookSearchRequest);
         return ResponseEntity.ok(bookSearchResponse);
     }
 }

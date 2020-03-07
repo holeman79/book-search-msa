@@ -11,14 +11,25 @@ feign:
 
 hystrix:
   command:
-    default:              # command key. use default for global setting.
+    booksByKakaoApi:              # command key. use default for global setting.
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 10000
+            timeoutInMilliseconds: 1
       circuitBreaker:
         requestVolumeThreshold: 20
         errorThresholdPercentage: 50
+    booksByNaverApi:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1
+  threadpool:
+    default:
+      coreSize: 100
+      maximumSize: 500
+      keepAliveTimeMinutes: 1
+      allowMaximumSizeToDivergeFromCoreSize: true
 
 history:
   ribbon:

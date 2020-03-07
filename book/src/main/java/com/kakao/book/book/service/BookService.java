@@ -9,5 +9,5 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 public interface BookService {
-    Mono<BookSearchResponse> getBooksByKakaoApi(BookSearchRequest bookSearchRequest);
+    Mono<BookSearchResponse> getBooksByExternalApi(BookSearchRequest bookSearchRequest);
 }
