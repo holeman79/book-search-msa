@@ -29,6 +29,8 @@ public class BookSearchRequest {
 
     private String target;
 
+    private Long userId;
+
     @Getter
     @AllArgsConstructor
     public enum SortType{
@@ -42,24 +44,6 @@ public class BookSearchRequest {
                     .filter(s -> s.getSort().equals(sort))
                     .findFirst()
                     .orElseGet(() -> sim);
-        }
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public enum TargetType{
-        d_titl("title"),       // 제목 검색
-        d_isbn("isbn"),        // ISBN 검색
-        d_publ("publisher"),   // 출판사 검색
-        d_auth("person");      // 인명 검색
-
-        private String target;
-
-        public static TargetType findByString(String target) {
-            return Arrays.stream(TargetType.values())
-                    .filter(t -> t.target.equals(target))
-                    .findFirst()
-                    .orElseGet(() -> d_titl);
         }
     }
 

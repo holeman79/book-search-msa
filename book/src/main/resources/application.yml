@@ -5,17 +5,13 @@ spring:
 server:
   port: 8081
 
-feign:
-  hystrix:
-    enabled: true
-
 hystrix:
   command:
     booksByKakaoApi:              # command key. use default for global setting.
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 1
+            timeoutInMilliseconds: 1000
       circuitBreaker:
         requestVolumeThreshold: 20
         errorThresholdPercentage: 50
@@ -23,7 +19,10 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 1
+            timeoutInMilliseconds: 5000
+      circuitBreaker:
+        requestVolumeThreshold: 20
+        errorThresholdPercentage: 50
   threadpool:
     default:
       coreSize: 100

@@ -1,7 +1,6 @@
 package com.kakao.book.book.service.remote;
 
 import com.kakao.book.book.config.api.KakaoProperty;
-import com.kakao.book.book.config.api.NaverProperty;
 import com.kakao.book.book.domain.dto.BookSearchRequest;
 import com.kakao.book.book.domain.dto.BookSearchResponse;
 import com.kakao.book.book.domain.kakao.KakaoBooks;
