@@ -19,7 +19,15 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 5000
+            timeoutInMilliseconds: 3000
+      circuitBreaker:
+        requestVolumeThreshold: 20
+        errorThresholdPercentage: 50
+    FeignKakaoBookRemoteService#getKakaoBooks(String):              # command key. use default for global setting.
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10 # error 발생유도
       circuitBreaker:
         requestVolumeThreshold: 20
         errorThresholdPercentage: 50
@@ -35,6 +43,10 @@ history:
     #listOfServers: localhost:7777, localhost:8500
     MaxAutoRetries: 1
     MaxAutoRetriesNextServer: 2
+
+feign:
+  hystrix:
+    enabled: true
 
 eureka:
   instance:
