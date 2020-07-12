@@ -10,6 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -50,6 +51,7 @@ public class BookSearchRequest {
     public String getKakaoUri(String uri) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri);
 
+        Optional.ofNullable(this.query).orElseThrow(IllegalArgumentException::new);
         builder.queryParam("query", this.query);
 
         if (StringUtils.hasText(this.sort)) {
