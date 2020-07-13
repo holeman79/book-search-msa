@@ -14,8 +14,8 @@ public class Item {
     private String link;
     private String image;
     private String author;
-    private Integer price;
-    private Integer discount;
+    private int price;
+    private int discount;
     private String publisher;
     private String isbn;       // Integer일 경우 오류 발생
     private String description;

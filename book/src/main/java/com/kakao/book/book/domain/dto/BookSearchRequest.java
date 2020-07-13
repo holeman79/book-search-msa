@@ -73,6 +73,7 @@ public class BookSearchRequest {
     public String getNaverUri(String uri) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(uri);
 
+        Optional.ofNullable(this.query).orElseThrow(IllegalArgumentException::new);
         builder.queryParam("query", this.query);
         if (StringUtils.hasText(this.sort)) {
             builder.queryParam("sort", SortType.findByString(this.sort).toString());

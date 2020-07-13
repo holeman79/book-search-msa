@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: book
+
+server:
+  port: 8081
+
+hystrix:
+  command:
+    booksByKakaoApi:              # command key. use default for global setting.
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+      circuitBreaker:
+        requestVolumeThreshold: 20
+        errorThresholdPercentage: 50
+    booksByNaverApi:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+      circuitBreaker:
+        requestVolumeThreshold: 20
+        errorThresholdPercentage: 50
+    FeignKakaoBookRemoteService#getKakaoBooks(String):              # command key. use default for global setting.
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10 # error 발생유도
+      circuitBreaker:
+        requestVolumeThreshold: 20
+        errorThresholdPercentage: 50
+  threadpool:
+    default:
+      coreSize: 100
+      maximumSize: 500
+      keepAliveTimeMinutes: 1
+      allowMaximumSizeToDivergeFromCoreSize: true
+
+feign:
+  hystrix:
+    enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+app:
+  api:
+    kakao:
+      domain: https://dapi.kakao.com
+      path: /v3/search/book
+      appKey: KakaoAK 2f5f548237c61a89a53f04539f8200cb
+    naver:
+      domain: https://openapi.naver.com
+      path: /v1/search/book.json
+      clientId: nIrE02ahRaMnxyWqivlG
+      clientSecret: h7kZcmtQ19

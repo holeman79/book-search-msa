@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Meta {
-    private Integer totalCount;
-    private Integer pageableCount;
+    private int totalCount;
+    private int pageableCount;
     private Boolean isEnd;
 }

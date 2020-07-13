@@ -5,6 +5,21 @@ spring:
 server:
   port: 8766
 
+zuul:
+  routes:
+    product:
+      path: /api/books/**
+      serviceId: book
+      stripPrefix: false
+    history:
+      path: /api/histories/**
+      serviceId: history
+      stripPrefix: false
+  ribbon-isolation-strategy: thread
+  thread-pool:
+    use-separate-thread-pools: true
+    thread-pool-key-prefix: zuul-
+
 eureka:
   instance:
     prefer-ip-address: true

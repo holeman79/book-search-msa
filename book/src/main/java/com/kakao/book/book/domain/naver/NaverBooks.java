@@ -10,8 +10,8 @@ import java.util.List;
 @Setter
 public class NaverBooks {
     private Date lastBuildDate;
-    private Integer total;
-    private Integer start;
-    private Integer display;
+    private int total;
+    private int start;
+    private int display;
     private List<Item> items;
 }
