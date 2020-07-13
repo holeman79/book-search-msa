@@ -1,3 +1,5 @@
+example.property: "I AM A default PROPERTY OVERRIDE"
+
 spring:
   application:
     name: book
